@@ -25,3 +25,20 @@ describe('Initialization', () => {
     expect(player.getGameboard()).toEqual(gameboard);
   });
 });
+
+describe('Player Name', () => {
+  test('should be between 3 and 15 characters', () => {
+    expect(() => new Player('Ha')).toThrow(
+      'Name length must be between 3 and 15 characters'
+    );
+    expect(() => new Player('HeliaHeliaHeliaHelia')).toThrow(
+      'Name length must be between 3 and 15 characters'
+    );
+  });
+
+  test('should not contains restricted characters', () => {
+    expect(() => new Player('!@#$%^Helia@#~')).toThrow(
+      'Name can only contain letters and numbers'
+    );
+  });
+});
