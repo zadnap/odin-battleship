@@ -9,7 +9,7 @@ export default [
   {
     files: ['**/*.js', '**/*.mjs'],
     languageOptions: {
-      ecmaVersion: 2021,
+      ecmaVersion: 'latest',
       sourceType: 'module',
       globals: globals.browser,
     },
