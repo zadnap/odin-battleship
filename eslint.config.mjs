@@ -28,7 +28,6 @@ export default [
       semi: ['error', 'always'],
       quotes: ['error', 'single'],
       indent: ['error', 2],
-      'comma-dangle': ['error', 'always-multiline'],
       'prettier/prettier': [
         'error',
         {
