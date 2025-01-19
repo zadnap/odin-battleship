@@ -34,6 +34,10 @@ class Player {
   getGameboard() {
     return this.#gameboard;
   }
+
+  isLost() {
+    return this.#gameboard.isAllSunk();
+  }
 }
 
 export default Player;
