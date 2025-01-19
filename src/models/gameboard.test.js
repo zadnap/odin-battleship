@@ -1,6 +1,21 @@
 import Gameboard from './gameboard';
 import Ship from './ship';
 
+jest.mock('./ship', () => {
+  return jest.fn().mockImplementation((length) => {
+    let hits = 0;
+
+    return {
+      hit: jest.fn(() => {
+        hits++;
+      }),
+      getLength: jest.fn(() => length),
+      getHits: jest.fn(() => hits),
+      isSunk: jest.fn(() => hits === length),
+    };
+  });
+});
+
 describe('Initialization', () => {
   let gameboard;
 
