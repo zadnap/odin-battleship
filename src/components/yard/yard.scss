@@ -1,0 +1,23 @@
+@use '@/assets/styles/variables.scss';
+
+.yard {
+  display: flex;
+
+  .title {
+    color: variables.$dark-gray;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    margin-right: 20px;
+    text-transform: uppercase;
+  }
+
+  .yard-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 15px;
+  }
+}

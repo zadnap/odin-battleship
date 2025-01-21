@@ -1,0 +1,11 @@
+@use '@/assets/styles/variables.scss';
+
+.ship-info {
+  color: variables.$black;
+  transition: all ease 0.2s;
+
+  &.sunk {
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+}
