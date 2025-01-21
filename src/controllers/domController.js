@@ -1,5 +1,6 @@
 import '@/assets/styles/globals.scss';
 import createStartScreen from '@/components/startScreen/startScreen.js';
+import createGameHost from '@/components/gameHost/gameHost.js';
 
 class DOMController {
   #app = document.querySelector('#app');
@@ -20,7 +21,7 @@ class DOMController {
 
   async renderMainScreen() {
     await this.#closeStartScreen();
-    this.renderHeader();
+    this.renderGameHost();
     this.renderGameboard();
   }
 
@@ -39,7 +40,9 @@ class DOMController {
     this.#remove(startScreen);
   }
 
-  renderHeader() {}
+  renderGameHost() {
+    this.#render(createGameHost('Welcome player Zadnap'));
+  }
 
   renderGameboard() {}
 }
