@@ -1,0 +1,33 @@
+@use '@/assets/styles/variables.scss';
+
+.gameboard {
+  display: flex;
+  padding: 30px;
+  flex: 1;
+
+  section {
+    padding: 0 50px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    > .title {
+      text-transform: uppercase;
+      text-align: center;
+      letter-spacing: 3px;
+      border-radius: 5px;
+      font-weight: 600;
+      padding: 10px 20px;
+      color: variables.$white;
+      background-color: variables.$dark-gray;
+    }
+  }
+
+  .ocean-board {
+    border-right: 1px solid variables.$gray;
+    > .title {
+      background-color: variables.$blue;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import '@/assets/styles/globals.scss';
 import createStartScreen from '@/components/startScreen/startScreen.js';
 import createGameHost from '@/components/gameHost/gameHost.js';
+import createGameboard from '@/components/gameboard/gameboard.js';
 
 class DOMController {
   #app = document.querySelector('#app');
@@ -44,7 +45,9 @@ class DOMController {
     this.#render(createGameHost('Welcome player Zadnap'));
   }
 
-  renderGameboard() {}
+  renderGameboard() {
+    this.#render(createGameboard());
+  }
 }
 
 export default DOMController;
