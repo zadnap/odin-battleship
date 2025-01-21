@@ -22,7 +22,7 @@ class DOMController {
 
   async renderMainScreen() {
     await this.#closeStartScreen();
-    this.renderGameHost();
+    this.renderGameHost('Welcome Zadnap!');
     this.renderGameboard();
   }
 
@@ -41,11 +41,15 @@ class DOMController {
     this.#remove(startScreen);
   }
 
-  renderGameHost() {
-    this.#render(createGameHost('Welcome player Zadnap'));
+  renderGameHost(message) {
+    const gameHost = document.querySelector('.game-host');
+    if (gameHost) gameHost.textContent = message;
+    else this.#render(createGameHost(message));
   }
 
   renderGameboard() {
+    const gameboard = document.querySelector('.gameboard');
+    if (gameboard) this.#remove(gameboard);
     this.#render(createGameboard());
   }
 }
