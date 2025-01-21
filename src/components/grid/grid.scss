@@ -1,0 +1,23 @@
+@use '@/assets/styles/variables.scss';
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  .cell {
+    cursor: pointer;
+    width: calc(10% - 3px);
+    aspect-ratio: 1 / 1;
+    border-radius: 5px;
+    background-color: variables.$gray;
+    transition: all ease 0.3s;
+
+    &:hover {
+      background-color: variables.$dark-gray;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+}
