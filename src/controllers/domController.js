@@ -23,9 +23,8 @@ class DOMController {
 
   async renderMainScreen() {
     await this.#closeStartScreen();
-    const secondPlayer = gameController.getPlayers()[1];
     this.renderGameHost(
-      `Welcome ${secondPlayer.getName()}! First you need to place your ships`
+      `Welcome ${gameController.getCurrentPlayer().getName()}! First you need to place your ships`
     );
     this.renderGameboard();
   }

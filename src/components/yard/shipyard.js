@@ -1,5 +1,6 @@
 import './yard.scss';
 import createShip from '@/components/ship/ship.js';
+import { gameController } from '@/index.js';
 
 function createShipyard() {
   const shipyard = document.createElement('div');
@@ -12,8 +13,13 @@ function createShipyard() {
 
   const yardList = document.createElement('div');
   yardList.className = 'yard-list';
-  yardList.appendChild(createShip(2));
-  yardList.appendChild(createShip(3));
+  const currentPlayerShips = gameController
+    .getCurrentPlayer()
+    .getGameboard()
+    .getShips();
+  currentPlayerShips.forEach((ship) => {
+    yardList.appendChild(createShip(ship.getLength()));
+  });
   shipyard.appendChild(yardList);
 
   return shipyard;

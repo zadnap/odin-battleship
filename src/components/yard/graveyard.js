@@ -1,5 +1,6 @@
 import './yard.scss';
 import createShipInfo from '@/components/shipInfo/shipInfo.js';
+import { gameController } from '@/index.js';
 
 function createGraveyard() {
   const graveyard = document.createElement('div');
@@ -12,8 +13,15 @@ function createGraveyard() {
 
   const yardList = document.createElement('div');
   yardList.className = 'yard-list';
-  yardList.appendChild(createShipInfo('Cruiser', 2));
-  yardList.appendChild(createShipInfo('Submarine', 3));
+  const currentOpponentShips = gameController
+    .getCurrentOpponent()
+    .getGameboard()
+    .getShips();
+  currentOpponentShips.forEach((ship) => {
+    yardList.appendChild(
+      createShipInfo(ship.getName(), ship.getLength(), ship.isSunk())
+    );
+  });
   graveyard.appendChild(yardList);
 
   return graveyard;

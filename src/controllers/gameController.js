@@ -9,11 +9,10 @@ class GameController {
     this.#currentPlayerIndex = 0;
     this.#players = [];
     this.#winner = null;
-    this.addPlayer(new Player('Helia', true));
   }
 
-  getPlayers() {
-    return this.#players;
+  playWithComputer() {
+    this.addPlayer(new Player('Helia', true));
   }
 
   addPlayer(player) {
@@ -25,29 +24,29 @@ class GameController {
   playTurn(x, y) {
     this.#attack(x, y);
     if (this.#isGameOver()) {
-      this.#winner = this.#getCurrentPlayer();
+      this.#winner = this.getCurrentPlayer();
     } else {
       this.#switchPlayer();
     }
   }
 
-  #getCurrentPlayer() {
+  getCurrentPlayer() {
     return this.#players[this.#currentPlayerIndex];
   }
 
   #attack(x, y) {
-    const opponent = this.#getOpponentPlayer();
+    const opponent = this.getCurrentOpponent();
     const gameboard = opponent.getGameboard();
     gameboard.receiveAttack(x, y);
   }
 
   #isGameOver() {
-    const opponent = this.#getOpponentPlayer();
+    const opponent = this.getCurrentOpponent();
     const gameboard = opponent.getGameboard();
     return gameboard.isAllSunk();
   }
 
-  #getOpponentPlayer() {
+  getCurrentOpponent() {
     return this.#players[1 - this.#currentPlayerIndex];
   }
 

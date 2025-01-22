@@ -31,6 +31,7 @@ function createStartForm() {
     event.preventDefault();
     try {
       gameController.addPlayer(new Player(nameInput.value));
+      gameController.playWithComputer();
       domController.renderMainScreen();
     } catch (error) {
       promptWarning(error.message);

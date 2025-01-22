@@ -6,21 +6,23 @@ import createGraveyard from '@/components/yard/graveyard.js';
 import { gameController } from '@/index.js';
 
 function createGameboard() {
-  const [firstPlayer, secondPlayer] = gameController.getPlayers();
-
   const gameboard = document.createElement('section');
   gameboard.className = 'gameboard';
 
   const oceanBoard = document.createElement('section');
   oceanBoard.className = 'ocean-board';
-  oceanBoard.appendChild(createTitle(secondPlayer.getName()));
+  oceanBoard.appendChild(
+    createTitle(gameController.getCurrentPlayer().getName())
+  );
   oceanBoard.appendChild(createGrid(10));
   oceanBoard.appendChild(createShipyard());
   gameboard.appendChild(oceanBoard);
 
   const targetBoard = document.createElement('section');
   targetBoard.className = 'target-board';
-  targetBoard.appendChild(createTitle(firstPlayer.getName()));
+  targetBoard.appendChild(
+    createTitle(gameController.getCurrentOpponent().getName())
+  );
   targetBoard.appendChild(createGrid(10));
   targetBoard.appendChild(createGraveyard());
   gameboard.appendChild(targetBoard);

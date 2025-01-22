@@ -23,6 +23,11 @@ beforeEach(() => {
 });
 
 describe('Player Handling', () => {
+  test('should add a computerized player as a default', () => {
+    controller.playWithComputer();
+    expect(controller.getCurrentPlayer().isComputer()).toBe(true);
+  });
+
   test('should initialize with no winner', () => {
     expect(controller.getWinner()).toBe(null);
   });
