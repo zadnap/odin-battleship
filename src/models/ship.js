@@ -1,14 +1,34 @@
 class Ship {
+  #name;
   #length;
   #hit;
+  #placed;
 
-  constructor(length) {
+  constructor(name, length) {
+    this.#name = name;
     this.#length = length;
+    this.#placed = false;
     this.#hit = 0;
+  }
+
+  getName() {
+    return this.#name;
   }
 
   getLength() {
     return this.#length;
+  }
+
+  isPlaced() {
+    return this.#placed;
+  }
+
+  placed() {
+    this.#placed = true;
+  }
+
+  unplaced() {
+    this.#placed = false;
   }
 
   getHits() {

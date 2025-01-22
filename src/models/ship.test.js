@@ -5,13 +5,22 @@ describe('Initialization', () => {
   let ship2;
 
   beforeEach(() => {
-    ship = new Ship(3);
-    ship2 = new Ship(4);
+    ship = new Ship('Submarine', 3);
+    ship2 = new Ship('Battleship', 4);
   });
 
   test('should initialize with correct length', () => {
     expect(ship.getLength()).toBe(3);
     expect(ship2.getLength()).toBe(4);
+  });
+
+  test('should initialize with correct name', () => {
+    expect(ship.getName()).toBe('Submarine');
+    expect(ship2.getName()).toBe('Battleship');
+  });
+
+  test('should not be placed on grid initially', () => {
+    expect(ship.isPlaced()).toBe(false);
   });
 
   test('should initialize with 0 hit', () => {
@@ -25,16 +34,30 @@ describe('Initialization', () => {
   });
 });
 
+describe('Placement', () => {
+  let ship;
+
+  beforeEach(() => {
+    ship = new Ship('Submarine', 3);
+  });
+
+  test('should change the placed state when placing on grid', () => {
+    expect(ship.isPlaced()).toBe(false);
+    ship.togglePlacement();
+    expect(ship.isPlaced()).toBe(true);
+  });
+});
+
 describe('Hit', () => {
   let ship;
   let ship2;
 
   beforeEach(() => {
-    ship = new Ship(3);
+    ship = new Ship('Submarine', 3);
     ship.hit();
     ship.hit();
     ship.hit();
-    ship2 = new Ship(4);
+    ship2 = new Ship('Battleship', 4);
     ship2.hit();
     ship2.hit();
     ship2.hit();
