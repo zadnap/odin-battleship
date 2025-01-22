@@ -13,17 +13,16 @@
   justify-content: center;
   gap: 10px;
   flex: 1;
-  background-color: #06100f;
+  background-color: variables.$background;
   transition: opacity ease 0.3s;
 
   .description {
-    color: #faec00;
+    color: variables.$yellow;
     text-transform: uppercase;
     letter-spacing: 3px;
   }
 
   .title {
-    color: variables.$white;
     text-transform: uppercase;
     font-size: 5rem;
     font-weight: 600;
@@ -31,7 +30,7 @@
 
   .credit {
     font-size: 0.8rem;
-    color: #0cabe8;
+    color: variables.$cyan;
     margin-bottom: 15px;
     a {
       color: inherit;
@@ -48,13 +47,13 @@
     .progress-bar {
       height: 30px;
       width: 100%;
-      border: 1px solid variables.$white;
+      border: 1px solid variables.$text;
       border-radius: 7px;
       display: flex;
       align-items: center;
 
       .progress {
-        background-color: variables.$white;
+        background-color: variables.$text;
         height: 100%;
         width: 0;
         border-radius: 5px;
@@ -65,7 +64,7 @@
     .desc-text {
       margin-top: 10px;
       text-transform: uppercase;
-      color: variables.$white;
+      color: variables.$text;
       font-weight: 200;
       font-size: 0.8rem;
       letter-spacing: 3px;
@@ -86,19 +85,19 @@
       font: inherit;
       outline: none;
       background-color: transparent;
-      color: variables.$white;
-      border: 1px solid variables.$white;
+      color: variables.$text;
+      border: 1px solid variables.$text;
       border-radius: 5px;
       padding: 7px 10px;
       transition: all ease 0.1s;
     }
     .name-input:focus {
-      background-color: variables.$white;
-      color: variables.$black;
+      background-color: variables.$text;
+      color: variables.$background;
     }
 
     .warning {
-      color: #faec00;
+      color: variables.$yellow;
       text-align: center;
       font-size: 0.7rem;
     }
@@ -111,12 +110,12 @@
       padding: 10px 15px;
       border-radius: 5px;
       background-color: transparent;
-      border: 1px solid variables.$white;
-      color: variables.$white;
+      border: 1px solid variables.$text;
+      color: variables.$text;
       transition: all ease 0.2s;
       &:hover {
-        background-color: variables.$white;
-        color: variables.$black;
+        background-color: variables.$text;
+        color: variables.$background;
       }
       &:active {
         transform: scale(0.9);

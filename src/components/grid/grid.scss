@@ -9,11 +9,11 @@
     width: calc(10% - 3px);
     aspect-ratio: 1 / 1;
     border-radius: 5px;
-    background-color: variables.$gray;
+    background-color: variables.$overlay;
     transition: all ease 0.3s;
 
     &:hover {
-      background-color: variables.$dark-gray;
+      background-color: variables.$lighter-overlay;
     }
 
     &:active {

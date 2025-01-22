@@ -2,10 +2,9 @@
 
 .game-host {
   padding: 15px;
-  background-color: variables.$gray;
-  color: variables.$black;
+  background-color: variables.$overlay;
   text-align: center;
-  border-bottom: 1px solid variables.$dark-gray;
+  border-bottom: 1px solid variables.$border;
   position: sticky;
   left: 0;
   right: 0;

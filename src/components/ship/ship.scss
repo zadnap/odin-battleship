@@ -7,7 +7,7 @@
     position: relative;
     width: 32px;
     aspect-ratio: 1 / 1;
-    background-color: #d1d2de;
+    background-color: variables.$overlay;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +25,7 @@
     &::before {
       content: '';
       position: absolute;
-      background-color: #9c9db6;
+      background-color: variables.$text;
       height: 35%;
       border-radius: 50%;
       aspect-ratio: 1 / 1;

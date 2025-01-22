@@ -19,15 +19,19 @@
       border-radius: 5px;
       font-weight: 600;
       padding: 10px 20px;
-      color: variables.$white;
-      background-color: variables.$dark-gray;
     }
   }
 
   .ocean-board {
-    border-right: 1px solid variables.$gray;
+    border-right: 1px solid variables.$border;
     > .title {
-      background-color: variables.$blue;
+      background-color: variables.$player;
+    }
+  }
+
+  .target-board {
+    > .title {
+      background-color: variables.$opponent;
     }
   }
 }
