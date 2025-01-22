@@ -19,7 +19,7 @@ function createStartScreen() {
   const credit = document.createElement('p');
   credit.className = 'credit';
   credit.innerHTML =
-    'Part of <a href="https://www.theodinproject.com/">TOP curriculum</a>';
+    'Part of <a href="https://www.theodinproject.com/dashboard" target="_blank" >TOP curriculum</a>';
   startScreen.appendChild(credit);
 
   const loading = createLoading();
