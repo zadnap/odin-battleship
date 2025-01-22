@@ -6,7 +6,7 @@
   gap: 3px;
   .cell {
     cursor: pointer;
-    width: calc(10% - 3px);
+    flex: 1 1 calc(10% - 3px);
     aspect-ratio: 1 / 1;
     border-radius: 5px;
     background-color: variables.$overlay;
