@@ -11,6 +11,10 @@
     border-radius: 5px;
     background-color: variables.$overlay;
     transition: all ease 0.3s;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
       background-color: variables.$lighter-overlay;
@@ -19,5 +23,31 @@
     &:active {
       transform: scale(0.9);
     }
+
+    &:before {
+      content: '';
+      position: absolute;
+      height: 35%;
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      transition: all ease 0.2s;
+      background-color: transparent;
+    }
+
+    &.miss:before {
+      background-color: variables.$text;
+    }
+  }
+}
+
+.ocean-board .grid .cell {
+  &.hit::before {
+    background-color: variables.$opponent;
+  }
+}
+
+.target-board .grid .cell {
+  &.hit::before {
+    background-color: variables.$player;
   }
 }
