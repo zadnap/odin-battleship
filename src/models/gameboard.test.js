@@ -1,30 +1,10 @@
 import Gameboard from './gameboard';
-import Ship from './ship';
-
-jest.mock('./ship', () => {
-  return jest.fn().mockImplementation((length) => {
-    let hits = 0;
-
-    return {
-      hit: jest.fn(() => {
-        hits++;
-      }),
-      getLength: jest.fn(() => length),
-      getHits: jest.fn(() => hits),
-      isSunk: jest.fn(() => hits === length),
-    };
-  });
-});
 
 describe('Initialization', () => {
   let gameboard;
 
   beforeEach(() => {
     gameboard = new Gameboard();
-  });
-
-  test('should initialize with an empty ship list', () => {
-    expect(gameboard.getShips()).toEqual([]);
   });
 
   test('should initialize with an empty grid', () => {
@@ -43,42 +23,49 @@ describe('Ship Placement', () => {
 
   beforeEach(() => {
     gameboard = new Gameboard();
-    ship = new Ship(3);
+    ship = gameboard.getShips()[0];
   });
 
   test('should be able to place horizontal ship at specific coordinates', () => {
-    gameboard.placeShip(ship, [0, 0], 'horizontal');
+    gameboard.placeShip(0, [0, 0], 'horizontal');
+    expect(ship.getLength()).toBe(2);
     expect(gameboard.getCell(0, 0)).toEqual(ship);
     expect(gameboard.getCell(0, 1)).toEqual(ship);
-    expect(gameboard.getCell(0, 2)).toEqual(ship);
   });
 
   test('should be able to place vertical ship at specific coordinates', () => {
-    gameboard.placeShip(ship, [0, 0], 'vertical');
+    gameboard.placeShip(0, [0, 0], 'vertical');
     expect(gameboard.getCell(0, 0)).toEqual(ship);
     expect(gameboard.getCell(1, 0)).toEqual(ship);
-    expect(gameboard.getCell(2, 0)).toEqual(ship);
   });
 
   test('should not be able to place ship that is not horizontal or vertical', () => {
-    expect(() => gameboard.placeShip(ship, [0, 0], 'diagonal')).toThrow(
+    expect(() => gameboard.placeShip(0, [0, 0], 'diagonal')).toThrow(
       'Can only place ship horizontally or vertically'
     );
   });
 
+  test('should not be able to place ship that is not inside the ship list', () => {
+    expect(() => gameboard.placeShip(-1, [0, 0], 'horizontal')).toThrow(
+      'The ship index must be between 0 and 4'
+    );
+    expect(() => gameboard.placeShip('5', [0, 0], 'horizontal')).toThrow(
+      'The ship index must be between 0 and 4'
+    );
+  });
+
   test('should not be able to place ship reaching outside the grid', () => {
-    expect(() => gameboard.placeShip(ship, [9, 9], 'horizontal')).toThrow(
+    expect(() => gameboard.placeShip(0, [9, 9], 'horizontal')).toThrow(
       'Cannot place ship outside the grid'
     );
-    expect(() => gameboard.placeShip(ship, [-1, -1], 'horizontal')).toThrow(
+    expect(() => gameboard.placeShip(0, [-1, -1], 'horizontal')).toThrow(
       'Cannot place ship outside the grid'
     );
   });
 
   test('should not be able to place ship overlapping each other', () => {
-    const anotherShip = new Ship(2);
-    gameboard.placeShip(ship, [0, 0], 'horizontal');
-    expect(() => gameboard.placeShip(anotherShip, [0, 1], 'vertical')).toThrow(
+    gameboard.placeShip(0, [0, 0], 'horizontal');
+    expect(() => gameboard.placeShip(1, [0, 1], 'vertical')).toThrow(
       'Cannot place ship overlapping each other'
     );
   });
@@ -90,8 +77,8 @@ describe('Attack Reception', () => {
 
   beforeEach(() => {
     gameboard = new Gameboard();
-    ship = new Ship(3);
-    gameboard.placeShip(ship, [0, 0], 'horizontal');
+    ship = gameboard.getShips()[0];
+    gameboard.placeShip(0, [0, 0], 'horizontal');
   });
 
   test('should register hit on grid', () => {
@@ -119,25 +106,39 @@ describe('Attack Reception', () => {
 
 describe('Ship Sunk', () => {
   let gameboard;
-  let ship;
-  let ship2;
 
   beforeEach(() => {
     gameboard = new Gameboard();
-    ship = new Ship(3);
-    ship2 = new Ship(2);
-    gameboard.placeShip(ship, [0, 0], 'horizontal');
-    gameboard.placeShip(ship2, [1, 0], 'horizontal');
+    gameboard.placeShip(0, [0, 0], 'horizontal');
+    gameboard.placeShip(1, [1, 0], 'horizontal');
+    gameboard.placeShip(2, [2, 0], 'horizontal');
+    gameboard.placeShip(3, [3, 0], 'horizontal');
+    gameboard.placeShip(4, [4, 0], 'horizontal');
   });
 
   test('should report when all ships have been sunk', () => {
     expect(gameboard.isAllSunk()).toBe(false);
     gameboard.receiveAttack(0, 0);
     gameboard.receiveAttack(0, 1);
-    gameboard.receiveAttack(0, 2);
     expect(gameboard.isAllSunk()).toBe(false);
     gameboard.receiveAttack(1, 0);
     gameboard.receiveAttack(1, 1);
+    gameboard.receiveAttack(1, 2);
+    gameboard.receiveAttack(1, 3);
+    expect(gameboard.isAllSunk()).toBe(false);
+    gameboard.receiveAttack(2, 0);
+    gameboard.receiveAttack(2, 1);
+    gameboard.receiveAttack(2, 2);
+    expect(gameboard.isAllSunk()).toBe(false);
+    gameboard.receiveAttack(3, 0);
+    gameboard.receiveAttack(3, 1);
+    gameboard.receiveAttack(3, 2);
+    gameboard.receiveAttack(3, 3);
+    gameboard.receiveAttack(3, 4);
+    expect(gameboard.isAllSunk()).toBe(false);
+    gameboard.receiveAttack(4, 0);
+    gameboard.receiveAttack(4, 1);
+    gameboard.receiveAttack(4, 2);
     expect(gameboard.isAllSunk()).toBe(true);
   });
 });

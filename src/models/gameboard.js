@@ -1,3 +1,5 @@
+import Ship from '@/models/ship';
+
 class Gameboard {
   #ships;
   #grid;
@@ -6,9 +8,19 @@ class Gameboard {
 
   constructor() {
     this.#size = 10;
-    this.#ships = [];
+    this.#ships = this.#generateShips();
     this.#grid = this.#generateGrid();
     this.#shots = [];
+  }
+
+  #generateShips() {
+    return [
+      new Ship('Cruiser', 2),
+      new Ship('Battleship', 4),
+      new Ship('Submarine', 3),
+      new Ship('Aircraft Carrier', 5),
+      new Ship('Destroyer', 3),
+    ];
   }
 
   #generateGrid() {
@@ -34,7 +46,12 @@ class Gameboard {
     return this.#grid[x][y];
   }
 
-  placeShip(ship, [x, y], orientation) {
+  placeShip(shipIndex, [x, y], orientation) {
+    if (!this.#isInsideShips(shipIndex))
+      throw new Error('The ship index must be between 0 and 4');
+
+    const ship = this.#ships[shipIndex];
+
     if (orientation === 'horizontal') {
       for (let i = y; i < y + ship.getLength(); i++) {
         if (!this.#isInsideGrid(x, i))
@@ -44,8 +61,8 @@ class Gameboard {
       }
       for (let i = y; i < y + ship.getLength(); i++) {
         this.#grid[x][i] = ship;
+        ship.placed();
       }
-      this.#ships.push(ship);
     } else if (orientation === 'vertical') {
       for (let i = x; i < x + ship.getLength(); i++) {
         if (!this.#isInsideGrid(i, y))
@@ -55,11 +72,16 @@ class Gameboard {
       }
       for (let i = x; i < x + ship.getLength(); i++) {
         this.#grid[i][y] = ship;
+        ship.placed();
       }
-      this.#ships.push(ship);
     } else {
       throw new Error('Can only place ship horizontally or vertically');
     }
+  }
+
+  #isInsideShips(index) {
+    if (index < this.#ships.length && index >= 0) return true;
+    return false;
   }
 
   #isInsideGrid(x, y) {
