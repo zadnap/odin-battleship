@@ -1,8 +1,7 @@
 import './gameboard.scss';
 import createTitle from './title';
 import createGrid from '@/components/grid/grid.js';
-import createShipyard from '@/components/yard/shipyard.js';
-import createGraveyard from '@/components/yard/graveyard.js';
+import createShipyard from '@/components/shipyard/shipyard.js';
 import { gameController } from '@/index.js';
 
 function createGameboard() {
@@ -15,7 +14,11 @@ function createGameboard() {
     createTitle(gameController.getCurrentPlayer().getName())
   );
   oceanBoard.appendChild(createGrid(10));
-  oceanBoard.appendChild(createShipyard());
+  const currentPlayerShips = gameController
+    .getCurrentPlayer()
+    .getGameboard()
+    .getShips();
+  oceanBoard.appendChild(createShipyard(currentPlayerShips));
   gameboard.appendChild(oceanBoard);
 
   const targetBoard = document.createElement('section');
@@ -24,7 +27,11 @@ function createGameboard() {
     createTitle(gameController.getCurrentOpponent().getName())
   );
   targetBoard.appendChild(createGrid(10));
-  targetBoard.appendChild(createGraveyard());
+  const currentOpponentShips = gameController
+    .getCurrentOpponent()
+    .getGameboard()
+    .getShips();
+  targetBoard.appendChild(createShipyard(currentOpponentShips));
   gameboard.appendChild(targetBoard);
 
   return gameboard;

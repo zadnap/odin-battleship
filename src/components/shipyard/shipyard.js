@@ -1,8 +1,7 @@
-import './yard.scss';
-import createShip from '@/components/ship/ship.js';
-import { gameController } from '@/index.js';
+import './shipyard.scss';
+import createShipInfo from '@/components/shipInfo/shipInfo.js';
 
-function createShipyard() {
+function createShipyard(ships) {
   const shipyard = document.createElement('div');
   shipyard.className = 'yard';
 
@@ -13,12 +12,10 @@ function createShipyard() {
 
   const yardList = document.createElement('div');
   yardList.className = 'yard-list';
-  const currentPlayerShips = gameController
-    .getCurrentPlayer()
-    .getGameboard()
-    .getShips();
-  currentPlayerShips.forEach((ship) => {
-    yardList.appendChild(createShip(ship.getLength()));
+  ships.forEach((ship) => {
+    yardList.appendChild(
+      createShipInfo(ship.getName(), ship.getLength(), ship.isSunk())
+    );
   });
   shipyard.appendChild(yardList);
 
