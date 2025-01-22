@@ -1,14 +1,15 @@
+import Player from '@/models/player';
+
 class GameController {
   #players = [];
   #currentPlayerIndex = 0;
   #winner = null;
 
-  constructor() {}
-
-  startNew() {
+  startNew(isWithComputer = true) {
     this.#currentPlayerIndex = 0;
     this.#players = [];
     this.#winner = null;
+    if (isWithComputer) this.addPlayer(new Player('Computer', true));
   }
 
   addPlayer(player) {

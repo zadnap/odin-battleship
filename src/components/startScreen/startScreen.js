@@ -1,6 +1,6 @@
 import './startScreen.scss';
 import createLoading from './loading';
-import createStartButton from './startButton';
+import createStartButton from './startForm';
 
 function createStartScreen() {
   const startScreen = document.createElement('section');
