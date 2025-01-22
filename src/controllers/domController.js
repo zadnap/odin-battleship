@@ -2,6 +2,7 @@ import '@/assets/styles/globals.scss';
 import createStartScreen from '@/components/startScreen/startScreen.js';
 import createGameHost from '@/components/gameHost/gameHost.js';
 import createGameboard from '@/components/gameboard/gameboard.js';
+import { gameController } from '@/index.js';
 
 class DOMController {
   #app = document.querySelector('#app');
@@ -22,7 +23,10 @@ class DOMController {
 
   async renderMainScreen() {
     await this.#closeStartScreen();
-    this.renderGameHost('Welcome Zadnap!');
+    const secondPlayer = gameController.getPlayers()[1];
+    this.renderGameHost(
+      `Welcome ${secondPlayer.getName()}! First you need to place your ships`
+    );
     this.renderGameboard();
   }
 

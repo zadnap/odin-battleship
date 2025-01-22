@@ -5,11 +5,15 @@ class GameController {
   #currentPlayerIndex = 0;
   #winner = null;
 
-  startNew(isWithComputer = true) {
+  startNew() {
     this.#currentPlayerIndex = 0;
     this.#players = [];
     this.#winner = null;
-    if (isWithComputer) this.addPlayer(new Player('Computer', true));
+    this.addPlayer(new Player('Helia', true));
+  }
+
+  getPlayers() {
+    return this.#players;
   }
 
   addPlayer(player) {
