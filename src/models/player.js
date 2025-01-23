@@ -35,6 +35,14 @@ class Player {
     return this.#gameboard;
   }
 
+  getGameboardSize() {
+    return this.#gameboard.getSize();
+  }
+
+  getShips() {
+    return this.#gameboard.getShips();
+  }
+
   isLost() {
     return this.#gameboard.isAllSunk();
   }
