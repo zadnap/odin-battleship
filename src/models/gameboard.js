@@ -46,6 +46,26 @@ class Gameboard {
     return this.#grid[x][y];
   }
 
+  autoPlaceShips() {
+    this.#ships.forEach((ship, index) => {
+      let placed = false;
+
+      while (!placed) {
+        const x = Math.floor(Math.random() * this.#size);
+        const y = Math.floor(Math.random() * this.#size);
+        const orientation = Math.random() > 0.5 ? 'horizontal' : 'vertical';
+
+        try {
+          this.placeShip(index, [x, y], orientation);
+          placed = true;
+          // eslint-disable-next-line no-unused-vars
+        } catch (error) {
+          continue;
+        }
+      }
+    });
+  }
+
   placeShip(shipIndex, [x, y], orientation) {
     if (!this.#isInsideShips(shipIndex))
       throw new Error('The ship index must be between 0 and 4');

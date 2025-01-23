@@ -26,6 +26,11 @@ describe('Ship Placement', () => {
     ship = gameboard.getShips()[0];
   });
 
+  test('should be able to automatically place all the ships on the grid', () => {
+    gameboard.autoPlaceShips();
+    expect(gameboard.getShips().every((ship) => ship.isPlaced())).toBe(true);
+  });
+
   test('should be able to place horizontal ship at specific coordinates', () => {
     gameboard.placeShip(0, [0, 0], 'horizontal');
     expect(ship.getLength()).toBe(2);
