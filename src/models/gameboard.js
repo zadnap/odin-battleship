@@ -47,6 +47,7 @@ class Gameboard {
   }
 
   autoPlaceShips() {
+    this.#clearGrid();
     this.#ships.forEach((ship, index) => {
       while (!ship.isPlaced()) {
         const x = Math.floor(Math.random() * this.#size);
@@ -63,6 +64,16 @@ class Gameboard {
     });
   }
 
+  #clearGrid() {
+    this.#grid.forEach((row, rowIndex) => {
+      row.forEach((cell, cellIndex) => {
+        if (cell) {
+          cell.unPlaced();
+          this.#grid[rowIndex][cellIndex] = null;
+        }
+      });
+    });
+  }
   placeShip(shipIndex, [x, y], orientation) {
     if (!this.#isInsideShips(shipIndex))
       throw new Error('The ship index must be between 0 and 4');

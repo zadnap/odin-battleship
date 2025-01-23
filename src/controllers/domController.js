@@ -24,9 +24,12 @@ class DOMController {
   async renderMainScreen() {
     await this.#closeStartScreen();
     this.renderGameHost(
-      `Welcome ${gameController.getCurrentPlayer().getName()}! First you need to place your ships`
+      `Welcome Admiral ${gameController.getCurrentPlayer().getName()}.
+      Press "R" to rearrange ships on grid.
+      When you are ready, press "Enter" to start playing.`
     );
     this.renderGameboard();
+    this.#listenToRearranging();
   }
 
   async #closeStartScreen() {
@@ -54,6 +57,21 @@ class DOMController {
     const gameboard = document.querySelector('.gameboard');
     if (gameboard) this.#remove(gameboard);
     this.#render(createGameboard());
+  }
+
+  #listenToRearranging() {
+    const handleRearrange = (event) => {
+      if (event.key === 'r') {
+        gameController.getCurrentPlayer().getGameboard().autoPlaceShips();
+        this.renderGameboard();
+      } else if (event.key === 'Enter') {
+        window.removeEventListener('keypress', handleRearrange);
+        this.renderGameHost(
+          `Awaiting orders, Admiral ${gameController.getCurrentPlayer().getName()}`
+        );
+      }
+    };
+    window.addEventListener('keypress', handleRearrange);
   }
 }
 

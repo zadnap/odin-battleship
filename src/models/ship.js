@@ -27,7 +27,7 @@ class Ship {
     this.#placed = true;
   }
 
-  unplaced() {
+  unPlaced() {
     this.#placed = false;
   }
 
