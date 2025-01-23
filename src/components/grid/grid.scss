@@ -40,13 +40,6 @@
         background-color: variables.$subtext;
       }
     }
-
-    &.has-ship {
-      background-color: variables.$thick-overlay;
-      &::before {
-        background-color: variables.$text;
-      }
-    }
   }
 }
 
@@ -58,8 +51,13 @@
     }
   }
 
-  &.has-ship.hit {
+  &.has-ship {
+    background-color: variables.$thick-overlay;
     &::before {
+      background-color: variables.$text;
+    }
+
+    &.hit::before {
       background-color: variables.$opponent;
     }
   }

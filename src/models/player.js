@@ -41,8 +41,8 @@ class Player {
     return this.#gameboard;
   }
 
-  getGameboardSize() {
-    return this.#gameboard.getSize();
+  getGameboardGrid() {
+    return this.#gameboard.getGrid();
   }
 
   getShips() {

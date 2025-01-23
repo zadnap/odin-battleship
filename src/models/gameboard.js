@@ -36,10 +36,6 @@ class Gameboard {
     return this.#ships;
   }
 
-  getSize() {
-    return this.#size;
-  }
-
   getGrid() {
     return this.#grid;
   }

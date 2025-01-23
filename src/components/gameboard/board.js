@@ -8,7 +8,7 @@ function createBoard(player) {
   const board = document.createElement('section');
   board.className = player === currentPlayer ? 'ocean-board' : 'target-board';
   board.appendChild(createTitle(player.getName()));
-  board.appendChild(createGrid(player.getGameboardSize()));
+  board.appendChild(createGrid(player.getGameboardGrid()));
   board.appendChild(createShipyard(player.getShips()));
 
   return board;
