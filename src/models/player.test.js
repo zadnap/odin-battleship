@@ -24,6 +24,10 @@ describe('Initialization', () => {
     const gameboard = new Gameboard();
     expect(player.getGameboard()).toEqual(gameboard);
   });
+
+  test('should initialize with a randomizedly pre-populated gameboard if their are computerized', () => {
+    expect(player.getShips().every((ship) => ship.isPlaced())).toBe(true);
+  });
 });
 
 describe('Player Name', () => {

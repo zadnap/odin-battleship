@@ -8,7 +8,7 @@ class Player {
   constructor(name, computerized = false) {
     this.#name = this.#verifyName(name);
     this.#computerized = computerized;
-    this.#gameboard = new Gameboard();
+    this.#gameboard = this.#generateGameboard();
   }
 
   #verifyName(name) {
@@ -21,6 +21,12 @@ class Player {
       throw new Error('Name can only contain letters and numbers');
 
     return trimmedName;
+  }
+
+  #generateGameboard() {
+    const gameboard = new Gameboard();
+    if (this.isComputer()) gameboard.autoPlaceShips();
+    return gameboard;
   }
 
   getName() {
