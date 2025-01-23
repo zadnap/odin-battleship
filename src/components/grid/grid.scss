@@ -17,14 +17,14 @@
     justify-content: center;
 
     &:hover {
-      background-color: variables.$lighter-overlay;
+      background-color: variables.$thick-overlay;
     }
 
     &:active {
       transform: scale(0.9);
     }
 
-    &:before {
+    &::before {
       content: '';
       position: absolute;
       height: 35%;
@@ -34,20 +34,42 @@
       background-color: transparent;
     }
 
-    &.miss:before {
-      background-color: variables.$text;
+    &.miss {
+      background-color: variables.$thin-overlay;
+      &::before {
+        background-color: variables.$subtext;
+      }
+    }
+
+    &.has-ship {
+      background-color: variables.$thick-overlay;
+      &::before {
+        background-color: variables.$text;
+      }
     }
   }
 }
 
 .ocean-board .grid .cell {
-  &.hit::before {
-    background-color: variables.$opponent;
+  &.placing {
+    background-color: variables.$thick-overlay;
+    &::before {
+      background-color: variables.$subtext;
+    }
+  }
+
+  &.has-ship.hit {
+    &::before {
+      background-color: variables.$opponent;
+    }
   }
 }
 
 .target-board .grid .cell {
-  &.hit::before {
-    background-color: variables.$player;
+  &.hit {
+    background-color: variables.$thick-overlay;
+    &::before {
+      background-color: variables.$player;
+    }
   }
 }
