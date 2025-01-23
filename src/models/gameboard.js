@@ -52,16 +52,13 @@ class Gameboard {
 
   autoPlaceShips() {
     this.#ships.forEach((ship, index) => {
-      let placed = false;
-
-      while (!placed) {
+      while (!ship.isPlaced()) {
         const x = Math.floor(Math.random() * this.#size);
         const y = Math.floor(Math.random() * this.#size);
         const orientation = Math.random() > 0.5 ? 'horizontal' : 'vertical';
 
         try {
           this.placeShip(index, [x, y], orientation);
-          placed = true;
           // eslint-disable-next-line no-unused-vars
         } catch (error) {
           continue;
