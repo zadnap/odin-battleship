@@ -3,7 +3,7 @@ import createShipInfo from '@/components/shipInfo/shipInfo.js';
 
 function createShipyard(ships) {
   const shipyard = document.createElement('div');
-  shipyard.className = 'yard';
+  shipyard.className = 'shipyard';
 
   const title = document.createElement('h3');
   title.className = 'title';
