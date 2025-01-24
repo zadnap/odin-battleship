@@ -40,6 +40,10 @@ class Gameboard {
     return this.#grid;
   }
 
+  getSize() {
+    return this.#size;
+  }
+
   getCell(x, y) {
     if (!this.#isInsideGrid(x, y))
       throw new Error('Cannot touch outside the grid');
@@ -139,17 +143,21 @@ class Gameboard {
   }
 
   #registerHitShot(x, y) {
-    this.#shots.push({
+    const hitShot = {
       type: 'hit',
       coordinates: [x, y],
-    });
+    };
+    this.#shots.push(hitShot);
+    this.#grid[x][y] = hitShot;
   }
 
   #registerMissedShot(x, y) {
-    this.#shots.push({
+    const missedShot = {
       type: 'miss',
       coordinates: [x, y],
-    });
+    };
+    this.#shots.push(missedShot);
+    this.#grid[x][y] = missedShot;
   }
 
   isAllSunk() {
