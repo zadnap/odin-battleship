@@ -7,8 +7,6 @@ import { gameController } from '@/index.js';
 class DOMController {
   #app = document.querySelector('#app');
 
-  constructor() {}
-
   #render(content, container = this.#app) {
     container.appendChild(content);
   }
@@ -24,13 +22,13 @@ class DOMController {
 
   async renderMainScreen() {
     await this.#closeStartScreen();
-    this.renderGameHost(
+    this.#showGameHostMessage(
       `Welcome Admiral ${gameController.getCurrentPlayer().getName()}.
       Press "R" to rearrange ships on grid.
       When you are ready, press "Enter" to start playing.`
     );
-    this.renderGameboard();
-    this.#listenToRearranging();
+    this.#renderGameboard();
+    this.#listenForRearranging();
   }
 
   async #closeStartScreen() {
@@ -48,80 +46,94 @@ class DOMController {
     this.#remove(startScreen);
   }
 
-  renderGameHost(message) {
+  #showGameHostMessage(message) {
     const gameHost = document.querySelector('.game-host');
-    if (gameHost) gameHost.textContent = message;
-    else this.#render(createGameHost(message));
+    if (gameHost) {
+      gameHost.textContent = message;
+    } else {
+      this.#render(createGameHost(message));
+    }
   }
 
-  renderGameboard() {
+  #renderGameboard() {
     const gameboard = document.querySelector('.gameboard');
-    if (gameboard) this.#remove(gameboard);
+    if (gameboard) {
+      this.#remove(gameboard);
+    }
     this.#render(createGameboard());
   }
 
-  #listenToRearranging() {
-    const handleRearrange = (event) => {
+  #listenForRearranging() {
+    const handleRearranging = (event) => {
       if (event.key === 'r') {
-        gameController.getCurrentPlayer().getGameboard().autoPlaceShips();
-        this.renderGameboard();
+        this.#rearrangeShips();
       } else if (event.key === 'Enter') {
-        window.removeEventListener('keydown', handleRearrange);
-        this.renderGameHost(
-          `Awaiting orders, Admiral ${gameController.getCurrentPlayer().getName()}`
-        );
-        this.#listenAttacking();
+        window.removeEventListener('keydown', handleRearranging);
+        this.#startGame();
       }
     };
-    window.addEventListener('keydown', handleRearrange);
+    window.addEventListener('keydown', handleRearranging);
   }
 
-  #listenAttacking() {
+  #rearrangeShips() {
+    gameController.getCurrentPlayer().getGameboard().autoPlaceShips();
+    this.#renderGameboard();
+  }
+
+  #startGame() {
+    this.#showGameHostMessage(
+      `Awaiting orders, Admiral ${gameController.getCurrentPlayer().getName()}`
+    );
+    this.#listenForAttacks();
+  }
+
+  #listenForAttacks() {
     const targetGrid = document.querySelector('.target-board .grid');
     targetGrid.addEventListener('click', (event) => {
       if (event.target !== targetGrid) {
         const x = Number(event.target.dataset.x);
         const y = Number(event.target.dataset.y);
 
-        const shots = gameController
-          .getCurrentOpponent()
-          .getGameboard()
-          .getShots();
-        if (
-          !shots.find(
-            (shot) => shot.coordinates[0] === x && shot.coordinates[1] === y
-          )
-        ) {
-          gameController.playTurn(x, y);
-          this.renderGameboard();
+        if (this.#hasAlreadyAttacked(x, y)) return;
 
-          if (gameController.getWinner()) {
-            this.renderGameHost(
-              `${gameController.getWinner().getName()} has won this game. Would you like to play again? (press "Y" or "N")`
-            );
-            this.#listenPlayingAgain();
-          } else {
-            this.#listenAttacking();
-          }
+        gameController.playTurn(x, y);
+        this.#renderGameboard();
+
+        if (gameController.getWinner()) {
+          this.#endGame();
+        } else {
+          this.#listenForAttacks();
         }
       }
     });
   }
 
-  #listenPlayingAgain() {
+  #hasAlreadyAttacked(x, y) {
+    const shots = gameController.getCurrentOpponent().getGameboard().getShots();
+    return shots.find(
+      (shot) => shot.coordinates[0] === x && shot.coordinates[1] === y
+    );
+  }
+
+  #endGame() {
+    this.#showGameHostMessage(
+      `${gameController.getWinner().getName()} has won this game. Would you like to play again? (press "Y" or "N")`
+    );
+    this.#listenForRestart();
+  }
+
+  #listenForRestart() {
     const handlePlayingAgain = (event) => {
       if (event.key === 'y') {
         window.removeEventListener('keydown', handlePlayingAgain);
-        gameController.startNew();
-        gameController.getCurrentPlayer().getGameboard().autoPlaceShips();
-        gameController.getCurrentOpponent().getGameboard().autoPlaceShips();
-        this.renderGameHost(
+        this.#restartGame();
+        this.#showGameHostMessage(
           `Welcome Admiral ${gameController.getCurrentPlayer().getName()}.
           Press "R" to rearrange ships on grid.
           When you are ready, press "Enter" to start playing.`
         );
-        this.renderGameboard();
-        this.#listenToRearranging();
+        this.#renderGameboard();
+        this.#listenForRearranging();
       } else if (event.key === 'n') {
         window.removeEventListener('keydown', handlePlayingAgain);
         gameController.refresh();
@@ -129,6 +141,12 @@ class DOMController {
       }
     };
     window.addEventListener('keydown', handlePlayingAgain);
+  }
+
+  #restartGame() {
+    gameController.startNew();
+    gameController.getCurrentPlayer().getGameboard().autoPlaceShips();
+    gameController.getCurrentOpponent().getGameboard().autoPlaceShips();
   }
 }
 
