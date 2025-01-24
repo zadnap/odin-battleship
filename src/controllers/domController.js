@@ -114,6 +114,7 @@ class DOMController {
         window.removeEventListener('keydown', handlePlayingAgain);
         gameController.startNew();
         gameController.getCurrentPlayer().getGameboard().autoPlaceShips();
+        gameController.getCurrentOpponent().getGameboard().autoPlaceShips();
         this.renderGameHost(
           `Welcome Admiral ${gameController.getCurrentPlayer().getName()}.
           Press "R" to rearrange ships on grid.
