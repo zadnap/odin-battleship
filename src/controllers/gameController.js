@@ -7,8 +7,14 @@ class GameController {
 
   startNew() {
     this.#currentPlayerIndex = 0;
-    this.#players = [];
     this.#winner = null;
+    this.#players.forEach((player) => player.clearBoard());
+  }
+
+  refresh() {
+    this.#currentPlayerIndex = 0;
+    this.#winner = null;
+    this.#players = [];
   }
 
   playWithComputer() {
@@ -27,6 +33,14 @@ class GameController {
       this.#winner = this.getCurrentPlayer();
     } else {
       this.#switchPlayer();
+
+      if (this.getCurrentPlayer().isComputer()) {
+        const opponentBoard = this.getCurrentOpponent().getGameboard();
+        const { x, y } =
+          this.getCurrentPlayer().computerMakeChoice(opponentBoard);
+        this.playTurn(x, y);
+        if (this.#winner) this.#switchPlayer();
+      }
     }
   }
 
