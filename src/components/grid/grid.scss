@@ -56,8 +56,11 @@
     &::before {
       background-color: variables.$text;
     }
+  }
 
-    &.hit::before {
+  &.hit {
+    background-color: variables.$thick-overlay;
+    &::before {
       background-color: variables.$opponent;
     }
   }
