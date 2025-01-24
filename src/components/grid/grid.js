@@ -10,14 +10,14 @@ function createGrid(gameboardGrid) {
     .getCurrentPlayer()
     .getGameboardGrid();
 
-  gameboardGrid.forEach((row) => {
-    row.forEach((cell) => {
+  gameboardGrid.forEach((row, x) => {
+    row.forEach((cell, y) => {
       let state = '';
       if (cell) {
         if (cell.type) state = cell.type;
         else if (currentPlayerGrid === gameboardGrid) state = 'has-ship';
       }
-      grid.appendChild(createCell(state));
+      grid.appendChild(createCell([x, y], state));
     });
   });
 
