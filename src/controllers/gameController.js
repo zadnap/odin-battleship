@@ -28,44 +28,30 @@ class GameController {
   }
 
   playTurn(x, y) {
-    this.#attack(x, y);
-    if (this.#isGameOver()) {
+    const gameboard = this.getCurrentOpponent().getGameboard();
+    const result = gameboard.receiveAttack(x, y);
+    if (gameboard.isAllSunk()) {
       this.#winner = this.getCurrentPlayer();
-    } else {
-      this.#switchPlayer();
-
-      if (this.getCurrentPlayer().isComputer()) {
-        const opponentBoard = this.getCurrentOpponent().getGameboard();
-        const { x, y } =
-          this.getCurrentPlayer().computerMakeChoice(opponentBoard);
-        this.playTurn(x, y);
-        if (this.#winner) this.#switchPlayer();
-      }
     }
+    return result;
+  }
+
+  computerPlayTurn() {
+    const playerBoard = this.getCurrentPlayer().getGameboard();
+    const { x, y } = this.getCurrentOpponent().computerMakeChoice(playerBoard);
+    const result = playerBoard.receiveAttack(x, y);
+    if (playerBoard.isAllSunk()) {
+      this.#winner = this.getCurrentOpponent();
+    }
+    return result;
   }
 
   getCurrentPlayer() {
     return this.#players[this.#currentPlayerIndex];
   }
 
-  #attack(x, y) {
-    const opponent = this.getCurrentOpponent();
-    const gameboard = opponent.getGameboard();
-    gameboard.receiveAttack(x, y);
-  }
-
-  #isGameOver() {
-    const opponent = this.getCurrentOpponent();
-    const gameboard = opponent.getGameboard();
-    return gameboard.isAllSunk();
-  }
-
   getCurrentOpponent() {
     return this.#players[1 - this.#currentPlayerIndex];
-  }
-
-  #switchPlayer() {
-    this.#currentPlayerIndex = 1 - this.#currentPlayerIndex;
   }
 
   getWinner() {
