@@ -3,6 +3,7 @@ import '@/assets/styles/globals.scss';
 import createStartScreen from '@/components/startScreen/startScreen.js';
 import createGameHost from '@/components/gameHost/gameHost.js';
 import createGameboard from '@/components/gameboard/gameboard.js';
+import createMusicButton from '@/components/musicButton/musicButton.js';
 import { gameController } from '@/index.js';
 
 class DOMController {
@@ -47,6 +48,10 @@ class DOMController {
   renderStartScreen() {
     this.#app.innerHTML = '';
     this.#render(createStartScreen());
+  }
+
+  renderMusicButton() {
+    this.#render(createMusicButton());
   }
 
   async renderMainScreen() {

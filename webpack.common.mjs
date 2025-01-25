@@ -47,6 +47,10 @@ export default {
         type: 'asset/resource',
       },
       {
+        test: /\.(mp3)$/i,
+        type: 'asset/resource',
+      },
+      {
         test: /\.m?js$/,
         exclude: /node_modules/,
         use: {

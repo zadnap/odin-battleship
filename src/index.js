@@ -5,5 +5,6 @@ const gameController = new GameController();
 gameController.startNew();
 const domController = new DOMController();
 domController.renderStartScreen();
+domController.renderMusicButton();
 
 export { gameController, domController };
