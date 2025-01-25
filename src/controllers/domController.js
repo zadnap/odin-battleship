@@ -161,18 +161,18 @@ class DOMController {
         targetGrid.removeEventListener('click', handleAttacking);
 
         await this.#humanAttack(x, y);
-
         if (gameController.getWinner()) {
           this.#endGame();
+          return;
         }
 
         await this.#computerAttack(x, y);
-
         if (gameController.getWinner()) {
           this.#endGame();
-        } else {
-          this.#listenForAttacks();
+          return;
         }
+
+        this.#listenForAttacks();
       }
     };
     targetGrid.addEventListener('click', handleAttacking);
