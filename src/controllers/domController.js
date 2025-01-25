@@ -267,8 +267,8 @@ class DOMController {
           this.#hostMessages.randomization,
           { playerName: gameController.getCurrentPlayer().getName() }
         );
-        await this.#showGameHostMessage(message, 100);
         this.#renderGameboard();
+        await this.#showGameHostMessage(message, 100);
         this.#listenForRearranging();
       } else if (event.key === 'n') {
         window.removeEventListener('keydown', handlePlayingAgain);
