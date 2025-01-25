@@ -129,13 +129,13 @@ class Gameboard {
   receiveAttack(x, y) {
     if (!this.getCell(x, y)) {
       this.#registerMissedShot(x, y);
-      return false;
+      return { type: 'miss' };
     }
 
     const ship = this.getCell(x, y);
     ship.hit();
     this.#registerHitShot(x, y);
-    return true;
+    return { type: 'hit', sunkShip: ship.isSunk() ? ship.getName() : null };
   }
 
   getShots() {

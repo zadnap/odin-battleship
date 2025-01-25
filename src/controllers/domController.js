@@ -20,8 +20,12 @@ class DOMController {
       miss: "You fired a shot at {opponentName}'s grid and...missed!",
     },
     receiveAttack: {
-      hit: '{opponentName} has fired a shot at your grid and...hit one of your ships!',
+      hit: '{opponentName} has fired a shot at your grid and...hit a ship!',
       miss: '{opponentName} has fired a shot at your grid and...missed!',
+    },
+    sunk: {
+      you: "You has sunk {opponentName}'s {shipName}",
+      opponent: '{opponentName} has sunk your {shipName}',
     },
     victory:
       "Congratulations, Admiral {playerName}, you've sunk all enemy ships!",
@@ -175,12 +179,19 @@ class DOMController {
   }
 
   async #humanAttack(x, y) {
-    const humanResult = gameController.playTurn(x, y);
+    const { type, sunkShip } = gameController.playTurn(x, y);
     let attackMsg;
-    if (humanResult) {
-      attackMsg = this.#replacePlaceholders(this.#hostMessages.attack.hit, {
-        opponentName: gameController.getCurrentOpponent().getName(),
-      });
+    if (type === 'hit') {
+      if (sunkShip) {
+        attackMsg = this.#replacePlaceholders(this.#hostMessages.sunk.you, {
+          opponentName: gameController.getCurrentOpponent().getName(),
+          shipName: sunkShip,
+        });
+      } else {
+        attackMsg = this.#replacePlaceholders(this.#hostMessages.attack.hit, {
+          opponentName: gameController.getCurrentOpponent().getName(),
+        });
+      }
     } else {
       attackMsg = this.#replacePlaceholders(this.#hostMessages.attack.miss, {
         opponentName: gameController.getCurrentOpponent().getName(),
@@ -191,15 +202,25 @@ class DOMController {
   }
 
   async #computerAttack(x, y) {
-    const computerResult = gameController.computerPlayTurn(x, y);
+    const { type, sunkShip } = gameController.computerPlayTurn(x, y);
     let receiveAttackMsg;
-    if (computerResult) {
-      receiveAttackMsg = this.#replacePlaceholders(
-        this.#hostMessages.receiveAttack.hit,
-        {
-          opponentName: gameController.getCurrentOpponent().getName(),
-        }
-      );
+    if (type === 'hit') {
+      if (sunkShip) {
+        receiveAttackMsg = this.#replacePlaceholders(
+          this.#hostMessages.sunk.opponent,
+          {
+            opponentName: gameController.getCurrentOpponent().getName(),
+            shipName: sunkShip,
+          }
+        );
+      } else {
+        receiveAttackMsg = this.#replacePlaceholders(
+          this.#hostMessages.receiveAttack.hit,
+          {
+            opponentName: gameController.getCurrentOpponent().getName(),
+          }
+        );
+      }
     } else {
       receiveAttackMsg = this.#replacePlaceholders(
         this.#hostMessages.receiveAttack.miss,

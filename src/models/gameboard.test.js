@@ -87,7 +87,10 @@ describe('Attack Reception', () => {
   });
 
   test('should register hit on grid', () => {
-    expect(gameboard.receiveAttack(0, 0)).toBe(true);
+    expect(gameboard.receiveAttack(0, 0)).toEqual({
+      type: 'hit',
+      sunkShip: null,
+    });
     expect(gameboard.getShots()[0]).toEqual({
       type: 'hit',
       coordinates: [0, 0],
@@ -101,7 +104,7 @@ describe('Attack Reception', () => {
   });
 
   test('should register miss on grid', () => {
-    expect(gameboard.receiveAttack(1, 0)).toBe(false);
+    expect(gameboard.receiveAttack(1, 0)).toEqual({ type: 'miss' });
     expect(gameboard.getShots()[0]).toEqual({
       type: 'miss',
       coordinates: [1, 0],
