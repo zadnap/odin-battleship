@@ -274,6 +274,7 @@ class DOMController {
         window.removeEventListener('keydown', handlePlayingAgain);
         gameController.refresh();
         this.renderStartScreen();
+        this.renderMusicButton();
       }
     };
     window.addEventListener('keydown', handlePlayingAgain);
