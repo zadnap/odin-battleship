@@ -26,14 +26,7 @@
     text-transform: uppercase;
     font-size: 5rem;
     font-weight: 600;
-  }
-
-  .credit {
-    color: variables.$cyan;
-    margin-bottom: 15px;
-    a {
-      color: inherit;
-    }
+    margin-bottom: 20px;
   }
 
   .loading {
@@ -80,7 +73,6 @@
     .name-input {
       width: 100%;
       text-align: center;
-      text-transform: capitalize;
       font: inherit;
       outline: none;
       background-color: transparent;
