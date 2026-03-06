@@ -1,9 +1,13 @@
 @use '@/assets/styles/variables.scss';
 
 .grid {
+  align-self: center;
   display: flex;
   flex-wrap: wrap;
   gap: 3px;
+  flex: 1;
+  aspect-ratio: 1 / 1;
+
   .cell {
     cursor: pointer;
     flex: 1 1 calc(10% - 3px);

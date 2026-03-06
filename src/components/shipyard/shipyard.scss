@@ -3,17 +3,6 @@
 .shipyard {
   display: flex;
 
-  .title {
-    color: variables.$subtext;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    writing-mode: vertical-lr;
-    transform: rotate(180deg);
-    margin-right: 20px;
-    text-transform: uppercase;
-  }
-
   .yard-list {
     display: flex;
     flex-wrap: wrap;
