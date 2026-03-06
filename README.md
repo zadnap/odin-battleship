@@ -1,7 +1,7 @@
 ### Odin Battleship
 
-- This project is part of [TOP Curriculumn](https://www.theodinproject.com/lessons/node-path-javascript-battleship)
-- See the project in action: [demo](https://zadnap.github.io/odin-battleship/)
+- This project is part of [TOP Curriculum](https://www.theodinproject.com/lessons/node-path-javascript-battleship)
+- See the project in action: [Demo](https://zadnap.github.io/odin-battleship/)
 
 ### Features
 
