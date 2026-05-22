@@ -14,9 +14,11 @@ beforeEach(() => {
 
   mockPlayer1 = {
     getGameboard: jest.fn().mockReturnValue(mockGameboard1),
+    clearBoard: jest.fn(),
   };
   mockPlayer2 = {
     getGameboard: jest.fn().mockReturnValue(mockGameboard2),
+    clearBoard: jest.fn(),
   };
 
   controller = new GameController();
@@ -42,7 +44,7 @@ describe('Player Handling', () => {
 });
 
 describe('Gameplay', () => {
-  test('should start a fresh game with an empty player list and no winner initially', () => {
+  test('should start a fresh game with no winner and clear board boards', () => {
     controller.addPlayer(mockPlayer1);
     controller.addPlayer(mockPlayer2);
 
@@ -50,7 +52,9 @@ describe('Gameplay', () => {
     controller.startNew();
 
     expect(controller.getWinner()).toBe(null);
-    expect(() => controller.addPlayer(mockPlayer1)).not.toThrow();
+    expect(() => controller.addPlayer({})).toThrow(
+      'Cannot have more than 2 players'
+    );
   });
 
   // eslint-disable-next-line quotes
@@ -65,11 +69,12 @@ describe('Gameplay', () => {
   });
 
   test('should switch players after a turn', () => {
+    mockPlayer2.computerMakeChoice = jest.fn().mockReturnValue({ x: 0, y: 2 });
     controller.addPlayer(mockPlayer1);
     controller.addPlayer(mockPlayer2);
 
     controller.playTurn(1, 1);
-    controller.playTurn(0, 2);
+    controller.computerPlayTurn();
 
     expect(mockGameboard1.receiveAttack).toHaveBeenCalledWith(0, 2);
     expect(mockGameboard2.receiveAttack).toHaveBeenCalledWith(1, 1);

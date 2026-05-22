@@ -43,7 +43,7 @@ describe('Placement', () => {
 
   test('should change the placed state when placing on grid', () => {
     expect(ship.isPlaced()).toBe(false);
-    ship.togglePlacement();
+    ship.placed();
     expect(ship.isPlaced()).toBe(true);
   });
 });
